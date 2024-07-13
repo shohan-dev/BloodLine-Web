@@ -11,22 +11,48 @@ const Home = () => {
     <div className="bg-gray-100 text-gray-800 font-sans">
       <Nav_Bar />
 
-      <Container maxWidth="lg">
-        <Grid container spacing={4} alignItems="center" style={{ padding: '16px', background: 'white', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h2" className="text-4xl font-bold">Welcome to our<br />Blood Donation</Typography>
-            <Typography variant="body1" className="text-xl mt-4 mb-20">
-              Help save lives by donating blood. <br />Your contribution can make a difference.
-            </Typography>
-            <Button variant="contained" color="primary" onClick={donateNow} className="bg-red-600 hover:bg-red-700 mt-6 px-8 py-3 rounded-full text-xl">
-              Donate Now
-            </Button>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <img src="https://www.shutterstock.com/image-vector/blood-bag-donated-cute-cartoon-600nw-2293990295.jpg" alt="Blood Donation" style={{ width: '100%', borderRadius: '8px' }} />
-          </Grid>
-        </Grid>
+      <Container maxWidth="lg" style={{ marginTop: '64px' }}>
+      <Grid container
+  spacing={4}
+  alignItems="center"          // Center items vertically
+  justifyContent="center"      // Center items horizontally
+  style={{
+    padding: '16px',
+    background: 'white',
+    borderRadius: '8px',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    textAlign: 'center'         // Center text inside Grid items
+  }}
+>
+  <Grid item xs={12} md={6}>
+    <Typography variant="h2" style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>
+      Welcome to our<br />Blood Donation
+    </Typography>
+    <Typography variant="body1" style={{ fontSize: '1.25rem', marginTop: '16px', marginBottom: '20px' }}>
+      Help save lives by donating blood.<br />Your contribution can make a difference.
+    </Typography>
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={donateNow}
+      style={{ backgroundColor: '#d33a35', color: 'white', fontSize: '1rem', padding: '12px 24px', borderRadius: '50px' }}
+    >
+      Donate Now
+    </Button>
+  </Grid>
+  <Grid item xs={12} md={6}>
+    <img
+      src="https://www.shutterstock.com/image-vector/blood-bag-donated-cute-cartoon-600nw-2293990295.jpg"
+      alt="Blood Donation"
+      style={{ width: '100%', borderRadius: '8px' }}
+    />
+  </Grid>
+</Grid>
 
+        {/* Blank space or separator */}
+        <Grid item xs={12}>
+          <div className="my-8"></div>
+        </Grid>
         <Grid container spacing={4} className="mt-8">
           <Grid item xs={12} md={6}>
             <div className="p-8 bg-white rounded-md shadow-lg">
@@ -40,7 +66,7 @@ const Home = () => {
           <Grid item xs={12} md={6}>
             <div className="p-8 bg-white rounded-md shadow-lg">
               <Typography variant="h4">Our Impact</Typography>
-              <Typography variant="h3" className="mt-4 font-semibold">5,000</Typography>
+              <Typography variant="h3" className="mt-4 font-semibold">+5,000</Typography>
               <Typography variant="body2" className="text-gray-500">Lives saved last year</Typography>
             </div>
           </Grid>
@@ -57,8 +83,8 @@ const Home = () => {
         </section>
       </Container>
 
-      <footer className="#c03c38 p-4 text-center text-white shadow-2xl">
-        <Typography variant="body2">&copy; 2023 Blood Donation</Typography>
+      <footer className="bg-red-600 p-4 text-center text-white shadow-lg">
+        <Typography variant="body2">&copy; 2024 Blood Donation</Typography>
       </footer>
     </div>
   );
