@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import { Button, Menu, MenuItem, Drawer, IconButton, Typography } from '@mui/material';
+import { Menu as MenuIcon, Close as CloseIcon } from '@mui/icons-material';
 import { useNavigate, Link } from 'react-router-dom';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
 
-const Nav_Bar = () => {
+const NavBar = () => {
   const [user, setUser] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -76,39 +71,37 @@ const Nav_Bar = () => {
 
   return (
     <div>
-      <header className="bg-[#c03c38] text-white py-2 shadow-lg">
-        <div className="container mx-auto flex justify-between items-center">
+      <header className="bg-[#d32f2f] text-white py-3 shadow-md">
+        <div className="container mx-auto flex justify-between items-center px-4">
           {/* Mobile Menu Icon */}
           <IconButton
-      edge="start"
-      color="inherit"
-      aria-label="menu"
-      onClick={handleDrawerOpen}
-      sx={{ display: { xs: 'block', sm: 'none' } }} // MUI system for responsive display
-    >
-      <MenuIcon />
-    </IconButton>
+            color="inherit"
+            aria-label="menu"
+            onClick={handleDrawerOpen}
+            sx={{ display: { xs: 'block', sm: 'none' } }} // MUI system for responsive display
+          >
+            <MenuIcon />
+          </IconButton>
 
-
-          {/* Logo (Visible on all screen sizes) */}
-          <Link to="/" className="text-white text-2xl font-bold no-underline">
+          {/* Logo */}
+          <Link to="/" className="text-white text-3xl font-bold" style={{ textDecoration: 'none' }}>
             Blood Donation
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-4">
-            <Link to="/" className="text-white no-underline hover:underline">
+          <nav className="hidden md:flex items-center space-x-6">
+            <Link to="/" className="text-white text-lg" style={{ textDecoration: 'none' }}>
               Home
             </Link>
-            <Link to="/Search_Donors" className="text-white no-underline hover:underline">
+            <Link to="/Search_Donors" className="text-white text-lg" style={{ textDecoration: 'none' }}>
               Search Donors
             </Link>
             {user ? (
               <>
-                <Link to="/Blood_Request" className="text-white no-underline hover:underline">
+                <Link to="/Blood_Request" className="text-white text-lg" style={{ textDecoration: 'none' }}>
                   Blood Request
                 </Link>
-                <Button variant="contained" color="primary" onClick={handleClick}>
+                <Button variant="outlined" color="inherit" onClick={handleClick}>
                   {user.email}
                 </Button>
                 <Menu
@@ -123,10 +116,10 @@ const Nav_Bar = () => {
               </>
             ) : (
               <>
-                <Link to="/Register" className="text-white no-underline hover:underline">
+                <Link to="/Register" className="text-white text-lg" style={{ textDecoration: 'none' }}>
                   Register
                 </Link>
-                <Link to="/Login" className="text-white no-underline hover:underline">
+                <Link to="/Login" className="text-white text-lg" style={{ textDecoration: 'none' }}>
                   Login
                 </Link>
               </>
@@ -139,7 +132,6 @@ const Nav_Bar = () => {
       <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerClose}>
         <div className="w-64 p-4">
           <IconButton
-            edge="start"
             color="inherit"
             aria-label="close"
             onClick={handleDrawerClose}
@@ -147,11 +139,11 @@ const Nav_Bar = () => {
           >
             <CloseIcon />
           </IconButton>
-          <div className="text-xl font-bold mb-4">
-            <Link to="/" className="text-[#c03c38] no-underline">
+          <Typography variant="h5" className="text-[#d32f2f] font-bold mb-4">
+            <Link to="/" className="no-underline" style={{ textDecoration: 'none', color: '#d32f2f' }}>
               Blood Donation
             </Link>
-          </div>
+          </Typography>
           <nav>
             <ul className="list-none p-0">
               {menuItems.map((item, index) => (
@@ -180,4 +172,4 @@ const Nav_Bar = () => {
   );
 };
 
-export default Nav_Bar;
+export default NavBar;

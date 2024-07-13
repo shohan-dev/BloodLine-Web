@@ -21,7 +21,7 @@ import Test1 from './Layout/Users/Test/Test1';
 const customTheme = createTheme({
   palette: {
     primary: {
-      main: '#c03c38',
+      main: '#d32f2f',
     },
   },
 });

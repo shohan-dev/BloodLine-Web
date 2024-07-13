@@ -35,7 +35,7 @@ const Home = () => {
       variant="contained"
       color="primary"
       onClick={donateNow}
-      style={{ backgroundColor: '#d33a35', color: 'white', fontSize: '1rem', padding: '12px 24px', borderRadius: '50px' }}
+      style={{ backgroundColor: '#d32f2f', color: 'white', fontSize: '1rem', padding: '12px 24px', borderRadius: '50px' }}
     >
       Donate Now
     </Button>

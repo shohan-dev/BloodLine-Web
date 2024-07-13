@@ -9,6 +9,7 @@ import copy from 'clipboard-copy';
 import { Card, CardContent, CardActions, Typography, Grow, Grid, } from '@mui/material';
 import firebaseConfig from '../../Component/firebaseConfig';
 import Nav_Bar from './Nav_Bar';
+import { bangladeshLocations } from '../../Other/Constant/data_string';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -16,18 +17,6 @@ const db = getFirestore(app);
 
 
 
-const bangladeshLocations = [
-  "Bagerhat", "Bandarban", "Barguna", "Barishal", "Bhola", "Bogura", "Brahmanbaria",
-  "Chandpur", "Chapai Nawabganj", "Chattogram", "Chuadanga", "Comilla", "Cox's Bazar",
-  "Dhaka", "Dinajpur", "Faridpur", "Feni", "Gaibandha", "Gazipur", "Gopalganj", "Habiganj",
-  "Jamalpur", "Jessore (Jashore)", "Jhalokati", "Jhenaidah", "Joypurhat", "Khagrachari",
-  "Khulna", "Kishoreganj", "Kushtia", "Lakshmipur", "Lalmonirhat", "Madaripur", "Magura",
-  "Manikganj", "Meherpur", "Moulvibazar", "Munshiganj", "Mymensingh", "Naogaon", "Narail",
-  "Narayanganj", "Narsingdi", "Natore", "Netrokona", "Nilphamari", "Noakhali", "Pabna",
-  "Panchagarh", "Patuakhali", "Pirojpur", "Rajbari", "Rajshahi", "Rangamati", "Rangpur",
-  "Satkhira", "Shariatpur", "Sherpur", "Sirajganj", "Sunamganj", "Sylhet", "Tangail",
-  "Thakurgaon", "Other district"
-];
 
 const Search_Donors = () => {
   const [items, setItems] = useState([]);
@@ -94,62 +83,67 @@ const Search_Donors = () => {
 
       
       <Nav_Bar></Nav_Bar>
-      <div className="relative w-full pb-5/3 max-w-5xl mx-auto mt-32 flex flex-row items-center justify-center">
-        <Autocomplete
-          className="w-1/3"
-          name="BloodGroup"
-          options={['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Blood Group"
-              variant="outlined"
-            />
-          )}
-          onChange={(event, value) => handleInputChange('BloodGroup', value)}
-        />
-        <Autocomplete
-          className="w-1/3"
-          name="Location"
-          options={bangladeshLocations}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Location"
-              variant="outlined"
-            />
-          )}
-          onChange={(event, value) => handleInputChange('Location', value)}
-          multiple={true}
-          filterOptions={(options, state) => {
-            return options.filter((option) =>
-              option.toLowerCase().includes(state.inputValue.toLowerCase())
-            );
-          }}
-        />
-        <Autocomplete
-          className="w-1/3"
-          name="DonorType"
-          options={['All', 'Eligible']}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Donor Type"
-              variant="outlined"
-            />
-          )}
-          onChange={(event, value) => handleInputChange('DonorType', value)}
-        />
+      <div className="relative w-full max-w-5xl mx-auto mt-16 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-4 px-4">
+  <Autocomplete
+    className="w-full sm:w-1/3"
+    name="BloodGroup"
+    options={['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']}
+    renderInput={(params) => (
+      <TextField
+        {...params}
+        label="Blood Group"
+        variant="outlined"
+        fullWidth
+      />
+    )}
+    onChange={(event, value) => handleInputChange('BloodGroup', value)}
+  />
+  <Autocomplete
+    className="w-full sm:w-1/3"
+    name="Location"
+    options={bangladeshLocations}
+    renderInput={(params) => (
+      <TextField
+        {...params}
+        label="Location"
+        variant="outlined"
+        fullWidth
+      />
+    )}
+    onChange={(event, value) => handleInputChange('Location', value)}
+    multiple={true}
+    filterOptions={(options, state) => {
+      return options.filter((option) =>
+        option.toLowerCase().includes(state.inputValue.toLowerCase())
+      );
+    }}
+  />
+  <Autocomplete
+    className="w-full sm:w-1/3"
+    name="DonorType"
+    options={['All', 'Eligible']}
+    renderInput={(params) => (
+      <TextField
+        {...params}
+        label="Donor Type"
+        variant="outlined"
+        fullWidth
+      />
+    )}
+    onChange={(event, value) => handleInputChange('DonorType', value)}
+  />
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={searchUsers}
-          style={{ height: '50px', width: '80px' }}
-        >
-          Search
-        </Button>
-      </div>
+  <Button
+    variant="contained"
+    color="primary"
+    onClick={searchUsers}
+    className="w-full sm:w-auto"
+    style={{ height: '50px', padding: '0 16px' }}
+  >
+    Search
+  </Button>
+</div>
+
 
       {isLoading && (
         <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
