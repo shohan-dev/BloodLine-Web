@@ -13,20 +13,10 @@ import firebaseConfig from '../../Component/firebaseConfig';
 import Nav_Bar from '../Welcome/Nav_Bar';
 import { ClipLoader } from 'react-spinners';
 import { Outlet } from 'react-router-dom';
+import { bangladeshLocations } from '../../Other/Constant/data_string';
 
 const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
-const bangladeshDistricts = [
-  "Bagerhat", "Bandarban", "Barguna", "Barishal", "Bhola", "Bogura", "Brahmanbaria",
-  "Chandpur", "Chapai Nawabganj", "Chattogram", "Chuadanga", "Comilla", "Cox's Bazar",
-  "Dhaka", "Dinajpur", "Faridpur", "Feni", "Gaibandha", "Gazipur", "Gopalganj", "Habiganj",
-  "Jamalpur", "Jessore (Jashore)", "Jhalokati", "Jhenaidah", "Joypurhat", "Khagrachari",
-  "Khulna", "Kishoreganj", "Kushtia", "Lakshmipur", "Lalmonirhat", "Madaripur", "Magura",
-  "Manikganj", "Meherpur", "Moulvibazar", "Munshiganj", "Mymensingh", "Naogaon", "Narail",
-  "Narayanganj", "Narsingdi", "Natore", "Netrokona", "Nilphamari", "Noakhali", "Pabna",
-  "Panchagarh", "Patuakhali", "Pirojpur", "Rajbari", "Rajshahi", "Rangamati", "Rangpur",
-  "Satkhira", "Shariatpur", "Sherpur", "Sirajganj", "Sunamganj", "Sylhet", "Tangail",
-  "Thakurgaon", "Other District"
-];
+
 
 const updateFirestoreData = async (formData) => {
   try {
@@ -171,7 +161,7 @@ const Blood_Request = () => {
             </Grid>
             <Grid item xs={12}>
               <Autocomplete
-                options={bangladeshDistricts}
+                options={bangladeshLocations}
                 renderInput={(params) => (
                   <TextField {...params} fullWidth label="Location" name="Location" />
                 )}

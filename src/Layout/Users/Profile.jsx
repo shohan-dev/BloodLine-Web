@@ -39,6 +39,14 @@ const Profile = () => {
   const [image, setImage] = useState(null);
 
   const styles = {
+    container: {
+      width: '30%',
+      marginRight: '20px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '10px'
+    },
     uploadLabel: {
       cursor: 'pointer',
       padding: '10px 15px',
@@ -50,6 +58,11 @@ const Profile = () => {
       textAlign: 'center',
       transition: 'background-color 0.3s ease',
       marginBottom: '10px',
+      fontWeight: 'bold',
+      fontSize: '14px'
+    },
+    fileInput: {
+      display: 'none'
     },
     imageContainer: {
       marginTop: '10px',
@@ -57,16 +70,17 @@ const Profile = () => {
       overflow: 'hidden',
       width: '100px', // Adjust the size of the container
       height: '100px', // Adjust the size of the container
-      border: '2px solid #ccc', // Add a border
+      border: '2px solid #ccc' // Add a border
     },
     profileImage: {
       maxWidth: '100%',
       height: 'auto',
       borderRadius: '50%', // Make the image rounded
       display: 'block',
-      objectFit: 'cover', // Maintain aspect ratio and cover the container
-    },
+      objectFit: 'cover' // Maintain aspect ratio and cover the container
+    }
   };
+  
   
 
   const [formData, setFormData] = useState({
@@ -232,27 +246,31 @@ const Profile = () => {
 
 
 
-
+{/* Image Container Section */}
  
-        <div style={{ width: '30%', marginRight: '20px' }}>
-  <label htmlFor="profilePicInput" style={styles.uploadLabel}>
-    Choose Image
-  </label>
+<div className="flex flex-col items-center justify-center w-full max-w-xs mx-auto">
+
   <input
     type="file"
     accept="image/*"
     onChange={handleImageChange}
-    style={{ display: 'none' }}
+    className="hidden"
     id="profilePicInput"
   />
-  <div style={styles.imageContainer}>
+  <div className="mt-28 w-80 h-80 rounded-full overflow-hidden border-4 border-gray-300 flex items-center justify-center">
     <img
       src={image || userData.ProfileImage || 'URL_TO_YOUR_DEFAULT_IMAGE'}
       alt="Profile"
-      style={styles.profileImage}
+      className="w-full h-full object-cover rounded-full"
     />
   </div>
+  <label htmlFor="profilePicInput" className="mt-8 cursor-pointer py-3 px-6 border border-gray-300 rounded-md bg-gray-100 text-gray-800 font-bold text-lg transition-colors duration-300 hover:bg-gray-200">
+    Choose Image
+  </label>
 </div>
+
+
+
 
 
 

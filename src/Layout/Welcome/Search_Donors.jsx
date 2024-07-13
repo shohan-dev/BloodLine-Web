@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Autocomplete, TextField, Button, Avatar } from '@mui/material';
+import { Autocomplete, TextField, Button } from '@mui/material';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import { ClipLoader } from 'react-spinners';
-import IconButton from '@mui/material/IconButton';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import copy from 'clipboard-copy';
-import { Card, CardContent, CardActions, Typography, Grow, Grid, } from '@mui/material';
+import { Card, Typography, Grow, Grid, } from '@mui/material';
 import firebaseConfig from '../../Component/firebaseConfig';
 import Nav_Bar from './Nav_Bar';
 import { bangladeshLocations } from '../../Other/Constant/data_string';
