@@ -131,7 +131,16 @@ function App() {
             }
           />
           {/* Admin Routes */}
-          <Route path="/Admin" element={<Outlet />}>
+          <Route
+          path="/Admin/*"
+          element={
+            isAuthenticated ? (
+              <Admin />
+            ) : (
+              <Admin_login/>
+            )
+          }
+        >
             <Route index element={<Admin />} />
             <Route path='Dashboad' element={<h1>This is Dashboard Admin</h1>} />
           </Route>
