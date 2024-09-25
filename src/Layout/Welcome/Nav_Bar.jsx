@@ -84,8 +84,10 @@ const NavBar = () => {
           </IconButton>
 
           {/* Logo */}
+         
           <Link to="/" className="text-white text-3xl font-bold" style={{ textDecoration: 'none' }}>
             Blood Donation
+           
           </Link>
 
           {/* Desktop Navigation */}
