@@ -9,7 +9,8 @@ import Button from '../ui/Button';
 const ModernNavbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-    const { user, userProfile, isAuthenticated } = useAuth();
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const { user, userProfile, isAuthenticated, logout } = useAuth();
     const { isDark, toggleTheme } = useTheme();
     const navigate = useNavigate();
     const location = useLocation();
@@ -29,9 +30,17 @@ const ModernNavbar = () => {
         { name: 'Settings', path: '/settings', icon: '⚙️' },
     ];
 
-    const handleLogout = () => {
-        // Implement logout logic
-        navigate('/');
+    const handleLogout = async () => {
+        try {
+            setIsLoggingOut(true);
+            await logout();
+            setIsProfileMenuOpen(false);
+            navigate('/');
+        } catch (error) {
+            console.error('Error during logout:', error);
+        } finally {
+            setIsLoggingOut(false);
+        }
     };
 
     const isActivePath = (path) => {
@@ -77,13 +86,13 @@ const ModernNavbar = () => {
                     {/* Right Side Actions */}
                     <div className="flex items-center space-x-4">
                         {/* Theme Toggle */}
-                        <button
+                        {/* <button
                             onClick={toggleTheme}
                             className="p-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
                             aria-label="Toggle theme"
                         >
                             {isDark ? '☀️' : '🌙'}
-                        </button>
+                        </button> */}
 
                         {isAuthenticated ? (
                             <>
@@ -153,10 +162,11 @@ const ModernNavbar = () => {
                                                 <div className="border-t border-gray-200 dark:border-gray-700">
                                                     <button
                                                         onClick={handleLogout}
-                                                        className="flex items-center space-x-2 w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                                                        disabled={isLoggingOut}
+                                                        className="flex items-center space-x-2 w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                                     >
-                                                        <span>🚪</span>
-                                                        <span>Sign Out</span>
+                                                        <span>{isLoggingOut ? '⏳' : '🚪'}</span>
+                                                        <span>{isLoggingOut ? 'Signing Out...' : 'Sign Out'}</span>
                                                     </button>
                                                 </div>
                                             </motion.div>
@@ -248,6 +258,18 @@ const ModernNavbar = () => {
                                         >
                                             <span>🚨</span>
                                             <span>Emergency Request</span>
+                                        </button>
+
+                                        <button
+                                            onClick={() => {
+                                                setIsMobileMenuOpen(false);
+                                                handleLogout();
+                                            }}
+                                            disabled={isLoggingOut}
+                                            className="w-full flex items-center space-x-2 px-3 py-2 mt-2 bg-gray-600 dark:bg-gray-700 text-white rounded-lg text-base font-medium hover:bg-gray-700 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                            <span>{isLoggingOut ? '⏳' : '🚪'}</span>
+                                            <span>{isLoggingOut ? 'Signing Out...' : 'Sign Out'}</span>
                                         </button>
                                     </>
                                 )}

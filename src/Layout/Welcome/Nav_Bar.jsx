@@ -33,6 +33,7 @@ const NavBar = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
+        console.log('User signed out:', user);
         setUser(null);
         localStorage.removeItem('userSession');
         handleClose();
@@ -84,10 +85,10 @@ const NavBar = () => {
           </IconButton>
 
           {/* Logo */}
-         
+
           <Link to="/" className="text-white text-3xl font-bold" style={{ textDecoration: 'none' }}>
             Blood Donation
-           
+
           </Link>
 
           {/* Desktop Navigation */}

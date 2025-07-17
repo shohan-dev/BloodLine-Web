@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
+import bloodSaveLifeImage from '../../Asset/img/blood save life.jpg';
 
 const ModernHome = () => {
     const [stats, setStats] = useState({
@@ -14,6 +16,7 @@ const ModernHome = () => {
     });
     const [isVisible, setIsVisible] = useState(false);
     const { isAuthenticated } = useAuth();
+    const { isDark } = useTheme();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -90,7 +93,10 @@ const ModernHome = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <div className={`min-h-screen transition-colors duration-300 ${isDark
+            ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900'
+            : 'bg-gradient-to-br from-red-50 via-white to-pink-50'
+            }`}>
             {/* Hero Section */}
             <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
                 <div className="max-w-7xl mx-auto">
@@ -107,7 +113,10 @@ const ModernHome = () => {
                                     initial={{ opacity: 0, scale: 0.8 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     transition={{ delay: 0.2, duration: 0.6 }}
-                                    className="inline-flex items-center px-4 py-2 bg-red-100 text-red-800 rounded-full text-sm font-medium"
+                                    className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 ${isDark
+                                        ? 'bg-red-900/30 text-red-200'
+                                        : 'bg-red-100 text-red-800'
+                                        }`}
                                 >
                                     🩸 Save Lives Today
                                 </motion.div>
@@ -174,11 +183,12 @@ const ModernHome = () => {
                             transition={{ delay: 0.3, duration: 0.8 }}
                             className="relative"
                         >
-                            <div className="relative z-10">
+                            <div className="">
                                 <img
-                                    src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                    src={bloodSaveLifeImage}
                                     alt="Blood Donation"
-                                    className="rounded-2xl shadow-2xl w-full h-96 object-cover"
+                                    style={{ objectFit: 'fill' }}
+                                    className="rounded-2xl shadow-2xl w-full h-96 object-contain bg-gray-100 dark:bg-gray-800"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-red-900/20 to-transparent rounded-2xl"></div>
                             </div>
@@ -187,20 +197,24 @@ const ModernHome = () => {
                             <motion.div
                                 animate={{ y: [0, -10, 0] }}
                                 transition={{ duration: 3, repeat: Infinity }}
-                                className="absolute -top-4 -left-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg"
+                                className={`absolute -top-4 -left-4 p-4 rounded-xl shadow-lg transition-colors duration-300 ${isDark ? 'bg-gray-800' : 'bg-white'
+                                    }`}
                             >
                                 <div className="text-2xl">🩸</div>
-                                <div className="text-sm font-medium">Live Donors</div>
+                                <div className={`text-sm font-medium transition-colors duration-300 ${isDark ? 'text-gray-300' : 'text-gray-700'
+                                    }`}>Live Donors</div>
                                 <div className="text-lg font-bold text-green-600">Online</div>
                             </motion.div>
 
                             <motion.div
                                 animate={{ y: [0, 10, 0] }}
                                 transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
-                                className="absolute -bottom-4 -right-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg"
+                                className={`absolute -bottom-4 -right-4 p-4 rounded-xl shadow-lg transition-colors duration-300 ${isDark ? 'bg-gray-800' : 'bg-white'
+                                    }`}
                             >
                                 <div className="text-2xl">❤️</div>
-                                <div className="text-sm font-medium">Lives Saved</div>
+                                <div className={`text-sm font-medium transition-colors duration-300 ${isDark ? 'text-gray-300' : 'text-gray-700'
+                                    }`}>Lives Saved</div>
                                 <div className="text-lg font-bold text-red-600">Today</div>
                             </motion.div>
                         </motion.div>
@@ -209,7 +223,8 @@ const ModernHome = () => {
             </section>
 
             {/* Features Section */}
-            <section className="py-20 bg-white dark:bg-gray-800">
+            <section className={`py-20 transition-colors duration-300 ${isDark ? 'bg-gray-800' : 'bg-white'
+                }`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -264,7 +279,8 @@ const ModernHome = () => {
             </section>
 
             {/* Blood Types Section */}
-            <section className="py-20 bg-gray-50 dark:bg-gray-900">
+            <section className={`py-20 transition-colors duration-300 ${isDark ? 'bg-gray-900' : 'bg-gray-50'
+                }`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -302,7 +318,8 @@ const ModernHome = () => {
             </section>
 
             {/* Testimonials */}
-            <section className="py-20 bg-white dark:bg-gray-800">
+            <section className={`py-20 transition-colors duration-300 ${isDark ? 'bg-gray-800' : 'bg-white'
+                }`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -337,7 +354,7 @@ const ModernHome = () => {
                                         <div className="font-semibold text-gray-900 dark:text-white">
                                             {testimonial.name}
                                         </div>
-                                        <div className="text-sm text-gray-500">{testimonial.role}</div>
+                                        <div className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role}</div>
                                     </div>
                                 </Card>
                             </motion.div>
