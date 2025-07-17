@@ -1,14 +1,20 @@
 import React from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import Login from './Login';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 
-function ProtectedRoute_User({ isAuthenticated }) {
-  const navigate = useNavigate();
+const ProtectedRouteUser = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
 
-  if (!isAuthenticated) {
-    navigate('/Login'); // Redirect to the login page if not authenticated
+  if (loading) {
+    return <LoadingSpinner fullScreen message="Checking authentication..." />;
   }
 
-  return <Outlet />
-}
+  if (!isAuthenticated) {
+    return <Login />;
+  }
 
-export default ProtectedRoute_User;
+  return children;
+};
+
+export default ProtectedRouteUser;

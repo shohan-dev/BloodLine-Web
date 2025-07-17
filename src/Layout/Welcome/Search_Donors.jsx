@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Autocomplete, TextField, Button } from '@mui/material';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import { ClipLoader } from 'react-spinners';
 import { Card, Typography, Grow, Grid, } from '@mui/material';
 import firebaseConfig from '../../Component/firebaseConfig';
-import Nav_Bar from './Nav_Bar';
 import { bangladeshLocations } from '../../Other/Constant/data_string';
 
 // Initialize Firebase
@@ -32,7 +31,7 @@ const Search_Donors = () => {
     setFilters({ ...filters, [name]: value });
   };
 
-  const searchUsers = async () => {
+  const searchUsers = useCallback(async () => {
     try {
       setLoading(true);
       let q = query(collection(db, 'User_Info'));
@@ -60,86 +59,90 @@ const Search_Donors = () => {
       });
 
       setItems(users);
-      
+
     } catch (error) {
       console.error('Error searching for users:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
 
   useEffect(() => {
     // Fetch initial data when the component mounts
     searchUsers();
-  }, []);
+  }, [searchUsers]);
 
   return (
-    <div className=''>
+    <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-red-500 to-red-600 dark:from-red-600 dark:to-red-700 text-white py-16">
+        <div className="max-w-4xl mx-auto text-center px-4">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Find Blood Donors</h1>
+          <p className="text-xl opacity-90">Connect with verified donors in your area instantly</p>
+        </div>
+      </div>
 
-      <img src="../../Asset/img/as.png" alt="" />
+      {/* Search Section */}
+      <div className="relative w-full max-w-5xl mx-auto -mt-8 mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-4 px-4">
+        <Autocomplete
+          className="w-full sm:w-1/3"
+          name="BloodGroup"
+          options={['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Blood Group"
+              variant="outlined"
+              fullWidth
+            />
+          )}
+          onChange={(event, value) => handleInputChange('BloodGroup', value)}
+        />
+        <Autocomplete
+          className="w-full sm:w-1/3"
+          name="Location"
+          options={bangladeshLocations}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Location"
+              variant="outlined"
+              fullWidth
+            />
+          )}
+          onChange={(event, value) => handleInputChange('Location', value)}
+          multiple={true}
+          filterOptions={(options, state) => {
+            return options.filter((option) =>
+              option.toLowerCase().includes(state.inputValue.toLowerCase())
+            );
+          }}
+        />
+        <Autocomplete
+          className="w-full sm:w-1/3"
+          name="DonorType"
+          options={['All', 'Eligible']}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Donor Type"
+              variant="outlined"
+              fullWidth
+            />
+          )}
+          onChange={(event, value) => handleInputChange('DonorType', value)}
+        />
 
-      
-      <Nav_Bar></Nav_Bar>
-      <div className="relative w-full max-w-5xl mx-auto mt-16 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-4 px-4">
-  <Autocomplete
-    className="w-full sm:w-1/3"
-    name="BloodGroup"
-    options={['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']}
-    renderInput={(params) => (
-      <TextField
-        {...params}
-        label="Blood Group"
-        variant="outlined"
-        fullWidth
-      />
-    )}
-    onChange={(event, value) => handleInputChange('BloodGroup', value)}
-  />
-  <Autocomplete
-    className="w-full sm:w-1/3"
-    name="Location"
-    options={bangladeshLocations}
-    renderInput={(params) => (
-      <TextField
-        {...params}
-        label="Location"
-        variant="outlined"
-        fullWidth
-      />
-    )}
-    onChange={(event, value) => handleInputChange('Location', value)}
-    multiple={true}
-    filterOptions={(options, state) => {
-      return options.filter((option) =>
-        option.toLowerCase().includes(state.inputValue.toLowerCase())
-      );
-    }}
-  />
-  <Autocomplete
-    className="w-full sm:w-1/3"
-    name="DonorType"
-    options={['All', 'Eligible']}
-    renderInput={(params) => (
-      <TextField
-        {...params}
-        label="Donor Type"
-        variant="outlined"
-        fullWidth
-      />
-    )}
-    onChange={(event, value) => handleInputChange('DonorType', value)}
-  />
-
-  <Button
-    variant="contained"
-    color="primary"
-    onClick={searchUsers}
-    className="w-full sm:w-auto"
-    style={{ height: '50px', padding: '0 16px' }}
-  >
-    Search
-  </Button>
-</div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={searchUsers}
+          className="w-full sm:w-auto"
+          style={{ height: '50px', padding: '0 16px' }}
+        >
+          Search
+        </Button>
+      </div>
 
 
       {isLoading && (
@@ -154,13 +157,13 @@ const Search_Donors = () => {
         </div>
       )}
 
-      <div className=' mt-20 pl-10 pr-10'>
+      <div className='mt-20 px-4 md:px-10'>
         <Grid container spacing={2} style={{ display: isLoading ? 'none' : 'flex' }}>
           {items.map((item, index) => (
             <Grow in={true} key={index} timeout={500}>
               <Grid item xs={12} sm={6} md={4} lg={3}>
                 <Card
-                  className={`relative w-full h-200 bg-cover bg-center card-image`}
+                  className={`relative w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700`}
                   onMouseEnter={() => setIsHovered(index)}
                   onMouseLeave={() => setIsHovered(null)}
                   variant="outlined"
@@ -172,9 +175,11 @@ const Search_Donors = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-                    transition: 'background-color 0.3s ease-in-out, transform 0.3s ease-in-out',
-                    transform: isHovered === index ? 'scale(1.05)' : 'scale(1)',
+                    boxShadow: isHovered === index
+                      ? '0 8px 25px rgba(0, 0, 0, 0.15)'
+                      : '0 2px 5px rgba(0, 0, 0, 0.1)',
+                    transition: 'all 0.3s ease-in-out',
+                    transform: isHovered === index ? 'scale(1.02)' : 'scale(1)',
                   }}
                 >
                   <div
@@ -202,14 +207,14 @@ const Search_Donors = () => {
                   <div style={{ padding: '20px' }}>
                     <Typography
                       variant="h5"
-                      color="primary"
+                      className="text-gray-900 dark:text-white"
                       style={{ textAlign: 'center', fontSize: '1.5rem' }}
                     >
                       {item.Name}
                     </Typography>
                     <Typography
                       variant="body2"
-                      color="textSecondary"
+                      className="text-gray-600 dark:text-gray-400"
                       style={{ textAlign: 'center', fontSize: '1.2rem' }}
                     >
                       Gender: {item.Gender}
@@ -222,7 +227,7 @@ const Search_Donors = () => {
                       Location: {item.Location}
                     </Typography>
 
-                      {/* Phone NO Show */}
+                    {/* Phone NO Show */}
                     <Typography
                       variant="body2"
                       color="textSecondary"
@@ -232,10 +237,10 @@ const Search_Donors = () => {
                       Phone: {item.Phone}
                     </Typography>
 
-                    
 
 
-                      
+
+
 
 
 

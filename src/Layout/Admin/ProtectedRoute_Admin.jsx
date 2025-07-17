@@ -1,18 +1,20 @@
-import { Route, Navigate } from 'react-router-dom';
+import React from 'react';
+import { useAuth } from '../../context/AuthContext';
+import AdminLogin from './Admin_login';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 
-function ProtectedRoute_Admin({ component: Component, userRole, allowedRoles, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        allowedRoles.includes(userRole) ? (
-          <Component {...props} />
-        ) : (
-          <Navigate to="/Admin_login" />
-        )
-      }
-    />
-  );
-}
+const ProtectedRouteAdmin = ({ children }) => {
+  const { isAuthenticated, isAdmin, loading } = useAuth();
 
-export default ProtectedRoute_Admin;
+  if (loading) {
+    return <LoadingSpinner fullScreen message="Checking authentication..." />;
+  }
+
+  if (!isAuthenticated || !isAdmin) {
+    return <AdminLogin />;
+  }
+
+  return children;
+};
+
+export default ProtectedRouteAdmin;

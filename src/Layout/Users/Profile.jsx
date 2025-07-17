@@ -17,12 +17,11 @@ import { FormControl, Typography } from '@mui/material';
 import { ClipLoader } from 'react-spinners';
 import { red } from '@mui/material/colors';
 import firebaseConfig from '../../Component/firebaseConfig';
-import Nav_Bar from '../Welcome/Nav_Bar';
 import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import Compressor from "compressorjs";
 import { compressImage } from './Component/All_Function';
-import { bangladeshDistricts,BloodGroups } from './Component/Data_query';
-import { male_image,female_image } from './Component/Data_query';
+import { bangladeshDistricts, BloodGroups } from './Component/Data_query';
+import { male_image, female_image } from './Component/Data_query';
 
 
 
@@ -80,8 +79,8 @@ const Profile = () => {
       objectFit: 'cover' // Maintain aspect ratio and cover the container
     }
   };
-  
-  
+
+
 
   const [formData, setFormData] = useState({
     Name: '',
@@ -128,10 +127,10 @@ const Profile = () => {
       ProfileImage: Gender === "Male" ? male_image : female_image,
       AccountCreate
     };
-    
+
     // send data to the firebase
 
-    
+
     if (image) {
       const storageRef = ref(storage, `profileImages/${Email}/profile.png`);
       await uploadBytes(storageRef, image).then(async (snapshot) => {
@@ -154,7 +153,7 @@ const Profile = () => {
       reader.onload = () => {
         setImage(reader.result);
         // setImageUpload(file);
-        compressImage(file,setImageUpload)
+        compressImage(file, setImageUpload)
 
       };
       reader.readAsDataURL(file);
@@ -227,7 +226,6 @@ const Profile = () => {
 
   return (
     <div>
-      <Nav_Bar />
       {/* Preloading code */}
       {isLoading && (
         <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
@@ -241,147 +239,147 @@ const Profile = () => {
         </div>
       )}
 
-        
-        <Container maxWidth="lg" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+
+      <Container maxWidth="lg" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
 
 
 
-{/* Image Container Section */}
- 
-<div className="flex flex-col items-center justify-center w-full max-w-xs mx-auto">
+        {/* Image Container Section */}
 
-  <input
-    type="file"
-    accept="image/*"
-    onChange={handleImageChange}
-    className="hidden"
-    id="profilePicInput"
-  />
-  <div className="mt-28 w-80 h-80 rounded-full overflow-hidden border-4 border-gray-300 flex items-center justify-center">
-    <img
-      src={image || userData.ProfileImage || 'URL_TO_YOUR_DEFAULT_IMAGE'}
-      alt="Profile"
-      className="w-full h-full object-cover rounded-full"
-    />
-  </div>
-  <label htmlFor="profilePicInput" className="mt-8 cursor-pointer py-3 px-6 border border-gray-300 rounded-md bg-gray-100 text-gray-800 font-bold text-lg transition-colors duration-300 hover:bg-gray-200">
-    Choose Image
-  </label>
-</div>
+        <div className="flex flex-col items-center justify-center w-full max-w-xs mx-auto">
 
-
-
-
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+            id="profilePicInput"
+          />
+          <div className="mt-28 w-80 h-80 rounded-full overflow-hidden border-4 border-gray-300 flex items-center justify-center">
+            <img
+              src={image || userData.ProfileImage || 'URL_TO_YOUR_DEFAULT_IMAGE'}
+              alt="Profile"
+              className="w-full h-full object-cover rounded-full"
+            />
+          </div>
+          <label htmlFor="profilePicInput" className="mt-8 cursor-pointer py-3 px-6 border border-gray-300 rounded-md bg-gray-100 text-gray-800 font-bold text-lg transition-colors duration-300 hover:bg-gray-200">
+            Choose Image
+          </label>
+        </div>
 
 
 
 
-  {/* Form Section */}
-  <div style={{ width: '65%' }}>
-    <form onSubmit={handleSubmit}>
-    <Grid container spacing={2} justifyContent={"center"} marginTop={15}>
-            {error && (
-              <Typography variant="body1" color="error" >
-                {error}
-              </Typography>
-            )}
-            {!isLoading && (
 
 
 
 
-              <>
+        {/* Form Section */}
+        <div style={{ width: '65%' }}>
+          <form onSubmit={handleSubmit}>
+            <Grid container spacing={2} justifyContent={"center"} marginTop={15}>
+              {error && (
+                <Typography variant="body1" color="error" >
+                  {error}
+                </Typography>
+              )}
+              {!isLoading && (
 
-              
-
-                
 
 
-                    <Grid item xs={12}>
-                      <TextField
-                        fullWidth
-                        label="Name"
-                        value={formData.Name}
-                        onChange={(event) => handleChange(event, event.target.value, 'Name')}
-                        required
-                      />
-                    </Grid>
 
-                    <Grid item xs={12}>
-                      <TextField
-                        fullWidth
-                        label="Phone"
-                        value={formData.Phone}
-                        onChange={(event) => handleChange(event, event.target.value, 'Phone')}
-                        required
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormControl fullWidth required>
-                        <Autocomplete
-                          options={BloodGroups}
-                          renderInput={(params) => <TextField {...params} label="Blood Group" />}
-                          value={formData.BloodGroup}
-                          onChange={(_, newValue) => handleChange(_, newValue, 'BloodGroup')}
-                        />
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={12}>
+                <>
+
+
+
+
+
+
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Name"
+                      value={formData.Name}
+                      onChange={(event) => handleChange(event, event.target.value, 'Name')}
+                      required
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Phone"
+                      value={formData.Phone}
+                      onChange={(event) => handleChange(event, event.target.value, 'Phone')}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth required>
                       <Autocomplete
-                        options={bangladeshDistricts}
-                        renderInput={(params) => <TextField {...params} fullWidth label="Location" />}
-                        value={formData.Location}
-                        onChange={(_, newValue) => handleChange(_, newValue, 'Location')}
+                        options={BloodGroups}
+                        renderInput={(params) => <TextField {...params} label="Blood Group" />}
+                        value={formData.BloodGroup}
+                        onChange={(_, newValue) => handleChange(_, newValue, 'BloodGroup')}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Autocomplete
+                      options={bangladeshDistricts}
+                      renderInput={(params) => <TextField {...params} fullWidth label="Location" />}
+                      value={formData.Location}
+                      onChange={(_, newValue) => handleChange(_, newValue, 'Location')}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <DatePicker
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        renderInput={(params) => <TextField {...params} fullWidth label="Date of Birth" />}
+                        maxDate={new Date()}
                         required
                       />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker
-                          value={selectedDate}
-                          onChange={handleDateChange}
-                          renderInput={(params) => <TextField {...params} fullWidth label="Date of Birth" />}
-                          maxDate={new Date()}
-                          required
-                        />
-                      </LocalizationProvider>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <RadioGroup value={formData.Gender} onChange={handleGenderChange} row>
-                        <FormControlLabel value="Male" control={<Radio />} label="Male" />
-                        <FormControlLabel value="Female" control={<Radio />} label="Female" />
-                      </RadioGroup>
-                    </Grid>
-                    {/* <Grid item xs={12}>
+                    </LocalizationProvider>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <RadioGroup value={formData.Gender} onChange={handleGenderChange} row>
+                      <FormControlLabel value="Male" control={<Radio />} label="Male" />
+                      <FormControlLabel value="Female" control={<Radio />} label="Female" />
+                    </RadioGroup>
+                  </Grid>
+                  {/* <Grid item xs={12}>
                   <h2 className=' mb-1'>Are You Eligible For Donate Blood?</h2>
                   <RadioGroup value={formData.DonorType} onChange={handleEligibleChange} row>
                     <FormControlLabel value="Eligible" control={<Radio />} label="Yes" />
                     <FormControlLabel value="Not Eligible" control={<Radio />} label="No" />
                   </RadioGroup>
                 </Grid> */}
-                    <Grid item xs={12}>
-                      <Button type="button" variant="contained" color="primary" onClick={handleUpdate} style={
-                        {
-                          backgroundColor: 'primary',
-                          color: 'white',
-                          fontSize: '15px',
-                          marginTop: '100px',
-                          padding: '15px 30px'
-                        }}>
-                        Update
-                      </Button>
-                    </Grid>
-                  
-                  
+                  <Grid item xs={12}>
+                    <Button type="button" variant="contained" color="primary" onClick={handleUpdate} style={
+                      {
+                        backgroundColor: 'primary',
+                        color: 'white',
+                        fontSize: '15px',
+                        marginTop: '100px',
+                        padding: '15px 30px'
+                      }}>
+                      Update
+                    </Button>
+                  </Grid>
 
-              </>
 
-            )}
 
-          </Grid>
-    </form>
-  </div>
-</Container>
+                </>
+
+              )}
+
+            </Grid>
+          </form>
+        </div>
+      </Container>
 
 
     </div>

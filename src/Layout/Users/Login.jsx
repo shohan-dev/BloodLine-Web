@@ -4,7 +4,6 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import firebaseConfig from '../../Component/firebaseConfig';
-import Nav_Bar from '../Welcome/Nav_Bar';
 import { ClipLoader } from 'react-spinners';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -94,7 +93,6 @@ const Login = () => {
 
   return (
     <div>
-      <Nav_Bar></Nav_Bar>
       {isLoading && (
         <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
           <ClipLoader

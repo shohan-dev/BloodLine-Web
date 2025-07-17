@@ -1,14 +1,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f6f7f9;
-  /* background-image: url("./img/background_register.png"); */
-  background-repeat: no-repeat;
-  margin: 0;
-  padding: 0;
+
+/* Base styles for both light and dark mode */
+@layer base {
+  html {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+  
+  body {
+    font-family: 'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    background-color: #f8fafc;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Dark mode styles */
+  .dark body {
+    background-color: #0f172a;
+    color: #f1f5f9;
+  }
 }
+
+/* Custom component styles */
+@layer components {
+  .bg-primary {
+    background-color: #dc2626;
+  }
+  
+  .text-primary {
+    color: #dc2626;
+  }
+  
+  .border-primary {
+    border-color: #dc2626;
+  }
+  
+  /* Card animations */
+  .card-hover {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Dark mode card styles */
+  .dark .card-hover:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Smooth transitions for theme switching */
+  * {
+    transition: background-color 0.3s ease-in-out, 
+                border-color 0.3s ease-in-out, 
+                color 0.3s ease-in-out,
+                box-shadow 0.3s ease-in-out;
+  }
+}
+
+/* Legacy styles for backward compatibility */
 
 header {
   background-color: #c03c38;

@@ -1,58 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { initializeApp } from 'firebase/app'; // Import initializeApp
+import { initializeApp } from 'firebase/app';
 import firebaseConfig from '../../Component/firebaseConfig';
 import { ClipLoader } from 'react-spinners';
+import { Container, Paper, Typography } from '@mui/material';
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 const Auth = () => {
-    const [user, setUser] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [isInitializing, setIsInitializing] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(true);
 
-    const auth = getAuth();
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setIsAuthenticated(!!currentUser);
+      setIsInitializing(false);
+    });
 
-  const login = true;
+    return () => unsubscribe();
+  }, []);
 
-  initializeApp(firebaseConfig);
-
-  
- 
-
-  onAuthStateChanged(auth, (user) => {
-    setIsInitializing(false); // Authentication is initialized
-    if (user) {
-      // User is signed in
-      console.log('User is signed in');
-      setIsAuthenticated(true);
-    } else {
-      // User is signed out
-      console.log('User is signed out');
-      setIsAuthenticated(false);
-    }
-  });
-
-
-  console.log(user)
   if (isInitializing) {
-    // Show a loader or loading indicator while initializing
-    return <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-    <ClipLoader
-      color={'#d73636'}
-      loading={true}
-      size={150}
-      aria-label="Loading Spinner"
-      data-testid="loader"
-    />
-  </div>;
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Container maxWidth="sm">
+          <Paper className="p-8 text-center shadow-lg">
+            <ClipLoader
+              color="#dc2626"
+              loading={true}
+              size={50}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+            <Typography variant="h6" className="mt-4 text-gray-600">
+              Checking authentication...
+            </Typography>
+          </Paper>
+        </Container>
+      </div>
+    );
   }
 
-  if (!user) {
-    console.log("This is not a valid user");
-    return <Navigate to="/Login" />;
-  }
-
-  return <Outlet />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
 export default Auth;

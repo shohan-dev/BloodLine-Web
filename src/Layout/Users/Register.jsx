@@ -17,9 +17,8 @@ import { FormControl, Typography } from '@mui/material';
 import { ClipLoader } from 'react-spinners';
 import { red } from '@mui/material/colors';
 import firebaseConfig from '../../Component/firebaseConfig';
-import Nav_Bar from '../Welcome/Nav_Bar';
-import { bangladeshDistricts,BloodGroups } from './Component/Data_query';
-import { male_image,female_image } from './Component/Data_query';
+import { bangladeshDistricts, BloodGroups } from './Component/Data_query';
+import { male_image, female_image } from './Component/Data_query';
 
 const Register = () => {
   // Initialize Firebase
@@ -48,7 +47,7 @@ const Register = () => {
     setError(null);
     setIsLoading(true);
 
-    const { Email, password, Name, Phone, Location, DateOfBirth, Gender, BloodGroup,DonorType } = formData;
+    const { Email, password, Name, Phone, Location, DateOfBirth, Gender, BloodGroup, DonorType } = formData;
 
     if (!Email || !password || !Name || !Phone || !Location || !DateOfBirth || !Gender || !BloodGroup || !DonorType) {
       setError("Required fields are empty");
@@ -130,13 +129,11 @@ const Register = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+
   };
 
   return (
     <div>
-      <Nav_Bar />
-
       {/* Preloading code */}
       {isLoading && (
         <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
@@ -149,8 +146,8 @@ const Register = () => {
           />
         </div>
       )}
-      
-      <Container maxWidth="xs" style={{ marginRight: '10%',display: isLoading ? 'none' : 'block' }}>
+
+      <Container maxWidth="xs" style={{ marginRight: '10%', display: isLoading ? 'none' : 'block' }}>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2} justifyContent="center" marginTop={15}>
             {error && (
@@ -242,10 +239,12 @@ const Register = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <Button type="button" variant="contained" color="primary" onClick={handleCreateEmail} style={
-                  {backgroundColor: 'primary',
-                  color: 'white',
-                  fontSize: '15px',
-                  padding: '15px 30px'}}>
+                    {
+                      backgroundColor: 'primary',
+                      color: 'white',
+                      fontSize: '15px',
+                      padding: '15px 30px'
+                    }}>
                     Register
                   </Button>
                 </Grid>
@@ -260,7 +259,7 @@ const Register = () => {
           </p>
         </div>
       </Container>
-      
+
     </div>
   );
 };
